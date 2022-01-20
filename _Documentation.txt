@@ -1,0 +1,176 @@
+/*
+    ºEstrutura para uso pessoal sem intenção divulgar ;)
+*/
+
+
+
+
+Explicação basica sobre url desta estrutura:
+
+    Se acessar a url do modo mostrado abaixo, ele irá procurar a action 'index' do controller automaticamente.
+    'baseDaSuaUrl/controllerName'
+
+    Se quiser acessar alguma action diferente de 'index' em um controller, basta especificar:
+    'baseDaSuaUrl/controllerName/actionName'
+
+    Se quiser passar parametro para uma action basta fazer:
+    'baseDaSuaUrl/controllerName/actionName/123'
+    nota: tudo que vier depois da 3º '/' que é o actionName, será considerado parametro de página dinamica
+
+
+
+
+
+
+
+
+
+
+#CRIANDO UMA NOVA ROTA:
+
+    1- Para criar uma nova rota basta crir um novo arquivo em 'controllers', por exemplo 'aboutController.php'
+    e criar uma action para ele com o conteúdo dentro, exemplo: 
+
+    class aboutController{
+        public function index(){
+            echo 'Page about is here!!!';
+        }
+        public function mvc(){
+            echo 'Page about is here!!!';
+        }
+    }
+
+    Agora pode ser acessado na url pelos parametros "/about/index" ou "/about/mvc";
+
+
+
+
+
+
+
+
+
+
+#INTERAGINDO COM O BANCO DE DADOS
+
+    1-Abra o arquivo config.php e configure o if da linha 6 com as infirmações de conexão com o seu banco de dados
+    local e o de produção.
+    
+    2-Para fazer uma interação com algum banco de dados basta criar um arquivo.php para cada tabela na pasta 'model'
+    e dentro dela 
+
+    3- Agora basta usar '$this->pdo' para fazer a sua conexão com o banco de dados! Você pode ver um exemplo 
+    no model existente 'User.php' para ter uma pequena base.
+
+    4- Para usar em algum controller, basta fazer antes de chamar uma view ou um template:
+
+    $users = new User();
+    print_r($user->getUsers());
+
+    *Usando como exemplo o Model que já vem por padrão 'User.php'
+
+
+    Nota: Quando for fazer deploy do projeto, abra o arquivo environment.php e troque 'development' por 'production'
+    para mudar o modo do projeto para produção e fazer as conexões corretamentes e evitar coisas desnessessarias 
+    de desenvolvimento no projeto já em produção.
+
+
+
+
+
+
+
+
+
+
+#CARREGANDO UMA VIEW/PAGE NOVA:
+
+    1- Para chamar uma nova view em algum controller, primeiro você deve cria-la na pasta 'view', por exemplo 'about.php'
+        e nela faça a estrutura que desejar.    
+
+    2- Após criar a view, basta usar no controller $this->loadView('viewName'); ou se quiser passar algum parametro,
+    use $this->loadView('home',['name' => 'Vanderson Tiago']); e pode acessar na view da seguinte forma: 
+    <?=$data['name']?>
+
+
+
+
+
+
+
+
+
+
+#CARREGANDO VIEW COM PARAMETROS
+    1- Para criar uma view com parametros basta criar uma action em algum controller, tipo 'abrir' 
+    logo em seguida receber o parametro, exemplo:
+
+        public function abrir($id){
+            echo 'Eu sou o id: '.$id;
+        }
+    
+    2- Agora você pode acessar tipo: www.seusite.com/controllerName/abrir/23
+
+    Nota: Você pode conferir um exemplo no controller 'galleryController.php'.
+    Se quiser testar, coloque na url baseurl/gallery/abrir/21
+
+
+
+
+
+
+
+
+
+
+#USANDO COMPONENTES
+
+    1- Para usar um componente você tem que primeiro cria-lo em 'component' e fazer a estrutura que desejar.
+
+    2- Após cria-lo basta usar em qualquer view que queira:
+    
+        <?= $this->loadComponents('componentName')?>
+
+
+
+
+
+
+
+
+
+
+#USANDO TEMPLATE:
+
+    1- Para usar template, crie ele na pasta 'template' com a estrutura que quiser e adicionar aonde quer
+    que seja carregado a view: <?php $this->loadView($viewName, $data); ?>
+
+    2- Agora no controller que for chamar, ao inves de usar:
+        
+        $this->loadView('viewName')
+
+        você usará:
+
+        $this->loadTemplate('templateName', 'viewName', ['id' => 1]);
+
+        lembrando que o 3º parametro é opcional, somente se for enviar alguma informação para usar no template ou na view.
+
+
+
+
+
+
+
+
+
+
+#ADICIONANDO LINKS E SCRIPTS PARA UMA VIEW:
+
+    1- Para adicionar um link ou um script em uma página, basta cria-los em assets/css ou assets/js e na view que
+    for chamar usar por exemplo:
+    
+    <link rel="stylesheet" href="<?=base_url?>assets/example.css" /> 
+    <script src="<?=base_url?>assets/example.js"></script>
+
+    A mesma coisa você faz com imagens! Você adiciona na pasta assets/images e para usar, faça:
+    <img src="<?=base_url?>assets/example.png" alt="" />

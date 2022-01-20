@@ -1,0 +1,27 @@
+.container{
+    margin: 0 auto;
+    max-width: 800px;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.mvcImage{
+    width: 600px;
+    max-height: 300px;
+}
+
+.title{
+    margin-top: 50px;
+    margin-bottom: 15px;
+    font-weight: lighter;
+}
+
+.container p{
+    font-size: 17px;
+    color: rgb(100, 100, 100);
+    text-align: left;
+}
+
+.creator{
+    font-weight: lighter;
+}
